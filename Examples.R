@@ -55,7 +55,8 @@ ggplot(df, aes(x=sex, fill=income))+
 
 df1<-dplyr::filter(data,native.country==" United-States")%>%select(sex,education,income)%>%
   group_by(sex,education,income)%>%summarise(freq=n())%>%
-  ungroup()%>%group_by(sex)%>%mutate(proportion=round(freq/sum(freq)*100,2))
+  ungroup()%>%group_by(sex)%>%mutate(proportion=round(freq/sum(freq)*100,2))%>%
+  arrange(desc(proportion))
 
 
 ggplot(df1, aes(x=sex, y=proportion,fill=income))+

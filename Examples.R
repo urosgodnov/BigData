@@ -45,10 +45,21 @@ plot
 data<-read.csv(file="./Sampledata/Census.csv", sep=",", stringsAsFactors = FALSE)
 
 df<-dplyr::filter(data,native.country==" United-States")%>%
-    select(marital.status, occupation,relationship,sex,income)
+    select(marital.status, education,relationship,sex,income)
 
 ggplot(df, aes(x=sex, fill=income))+
-  geom_bar()+facet_grid(~occupation)+
+  geom_bar()+facet_grid(~education)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  theme(strip.text.x = element_text(size = 8, colour = "blue", angle = 90))
+
+
+df1<-dplyr::filter(data,native.country==" United-States")%>%select(sex,education,income)%>%
+  group_by(sex,education,income)%>%summarise(freq=n())%>%
+  ungroup()%>%group_by(sex)%>%mutate(proportion=round(freq/sum(freq)*100,2))
+
+
+ggplot(df1, aes(x=sex, y=proportion,fill=income))+
+  geom_bar(stat="identity")+facet_grid(~education)+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
   theme(strip.text.x = element_text(size = 8, colour = "blue", angle = 90))
 

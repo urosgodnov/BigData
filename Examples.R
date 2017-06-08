@@ -40,4 +40,24 @@ plot<-ggplot(dataset1, aes(x=horsepower, y=price))+geom_point(shape=1)
 plot<-plot+facet_grid(fuel~.)
 
 plot
-             
+  
+#Demo census
+data<-read.csv(file="./Sampledata/Census.csv", sep=",", stringsAsFactors = FALSE)
+
+df<-dplyr::filter(data,native.country==" United-States")%>%
+    select(marital.status, occupation,relationship,sex,income)
+
+ggplot(df, aes(x=sex, fill=income))+
+  geom_bar()+facet_grid(~occupation)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  theme(strip.text.x = element_text(size = 8, colour = "blue", angle = 90))
+
+
+
+#proportions
+df1<-dplyr::filter(data,native.country==" United-States")%>%select(sex,income)%>%
+  group_by(sex,income)%>%summarise(freq=n())%>%
+  ungroup()%>%group_by(sex)%>%mutate(proportion=freq/sum(freq)*100)%>%
+  filter(income==" >50K")
+
+df1

@@ -1,0 +1,6 @@
+﻿Stoplist
+able
+italy
+hotel
+hotels
+portoroz

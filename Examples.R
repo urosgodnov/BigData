@@ -18,9 +18,11 @@ package.check <- lapply(packages, FUN = function(x) {
   }
 })
 
+
+
 Tips<-within(tips, ratio<-tip/total_bill)
              
-plot<-ggplot(tips, aes(x=total_bill, y=ratio))+geom_point(shape=1)+
+plot<-ggplot(Tips, aes(x=total_bill, y=ratio))+geom_point(shape=1)+
       facet_grid(time~sex)
              
 plot<-plot+geom_smooth(method=lm, se=FALSE)
